@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171329">
+<title>Lunaria | Un refugio entre estrellas</title>
+
+<style>
+:root {
+  --bg: #171329;
+  --card: #25203d;
+  --purple: #bba4ed;
+  --light: #eee8ff;
+  --muted: #b9afcf;
+  --gold: #e8d5a6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #393054, #171329 65%);
+  color: var(--light);
+  font-family: Georgia, serif;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 35px 15px 20px;
+}
+
+.moon {
+  font-size: 48px;
+  filter: drop-shadow(0 0 18px #c6aaff);
+}
+
+h1 {
+  font-size: 38px;
+  font-weight: normal;
+  letter-spacing: 5px;
+  margin: 8px 0;
+  color: #e8dcff;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 14px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  flex-wrap: wrap;
+}
+
+button {
+  background: #39304f;
+  color: white;
+  border: 1px solid #79679e;
+  border-radius: 20px;
+  padding: 11px 17px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+button.primary {
+  background: #a58acb;
+  color: #1c1630;
+  border: none;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 12px 18px 50px;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.welcome {
+  text-align: center;
+  padding: 25px 10px;
+}
+
+.welcome h2 {
+  font-size: 25px;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+.welcome p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.panel {
+  background: rgba(45, 37, 67, .85);
+  border: 1px solid #57476e;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 16px 0;
+}
+
+h2, h3 {
+  font-weight: normal;
+  color: var(--purple);
+}
+
+input, textarea {
+  width: 100%;
+  background: #19152a;
+  color: white;
+  border: 1px solid #675783;
+  border-radius: 10px;
+  padding: 13px;
+  margin: 8px 0 15px;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.book {
+  background: #302743;
+  padding: 17px;
+  border-radius: 13px;
+  margin: 12px 0;
+  border-left: 3px solid var(--purple);
+}
+
+.book p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.reader {
+  line-height: 2;
+  font-size: 18px;
+  white-space: pre-wrap;
+}
+
+.reader p {
+  padding: 5px;
+  border-radius: 8px;
+  transition: background .3s;
+}
+
+.reader p.reading {
+  background: #58466e;
+  color: white;
+  box-shadow: 0 0 15px #a98bd8;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 18px 0;
+}
+
+footer {
+  text-align: center;
+  color: #9d91b8;
+  padding: 25px;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="moon">☾</div>
+  <h1>LUNARIA</h1>
+  <div class="subtitle">Un refugio entre estrellas</div>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Inicio</button>
+  <button onclick="showSection('library')">Biblioteca</button>
+  <button onclick="showSection('add')">Añadir libro</button>
+</nav>
+
+<main>
+
+<section id="home" class="section active">
+  <div class="welcome">
+    <h2>Hay historias que merecen ser escuchadas bajo la luna.</h2>
+    <p>
+      Bienvenida a Lunaria.<br>
+      Un pequeño universo donde las palabras
+      encuentran una voz y los libros nunca
+      están demasiado lejos.
+    </p>
+    <div class="moon">✧ 🌙 ✧</div>
+  </div>
+
+  <div class="panel">
+    <h3>Un rincón para ti</h3>
+    <p style="line-height:1.8;color:#c8bddb">
+      Aquí puedes leer, escuchar historias,
+      guardar tus libros favoritos y perderte
+      un ratito entre palabras.
+    </p>
+    <button class="primary" onclick="showSection('library')">
+      Explorar biblioteca
+    </button>
+  </div>
+</section>
+
+<section id="library" class="section">
+  <h2>Tu biblioteca ✧</h2>
+  <p style="color:#b9afcf">
+    Cada libro es una puerta a otro universo.
+  </p>
+  <div id="bookList"></div>
+</section>
+
+<section id="add" class="section">
+  <div class="panel">
+    <h2>Agregar una historia</h2>
+
+    <label for="bookTitle">Título del libro</label>
+    <input id="bookTitle" placeholder="Nombre de tu historia">
+
+    <label for="bookAuthor">Autor</label>
+    <input id="bookAuthor" placeholder="Nombre del autor">
+
+    <label for="bookText">Contenido del libro</label>
+    <textarea id="bookText" placeholder="Escribe o pega aquí tu historia..."></textarea>
+
+    <button class="primary" onclick="addBook()">
+      Guardar en mi biblioteca ✨
+    </button>
+  </div>
+</section>
+
+<section id="reading" class="section">
+  <button onclick="showSection('library')">← Volver</button>
+  <div class="panel">
+    <h2 id="readingTitle"></h2>
+    <p id="readingAuthor" style="color:#b9afcf"></p>
+    
+    <div class="controls">
+      <button class="primary" onclick="speakBook()">▶ Escuchar</button>
+      <button onclick="pauseBook()">Ⅱ Pausar</button>
+      <button onclick="resumeBook()">Continuar</button>
+      <button onclick="stopBook()">■ Detener</button>
+    </div>
+
+    <div id="reader" class="reader"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Hecho de sueños, palabras y un poquito de magia. ☾
+  <br><br>
+  LUNARIA © 2026
+</footer>
+
+<script>
+let books = JSON.parse(localStorage.getItem('lunariaBooks') || '[]');
+let currentBook = null;
+let currentParagraph = 0;
+let utterance = null;
+
+function saveBooks() {
+  localStorage.setItem('lunariaBooks', JSON.stringify(books));
+}
+
+function showSection(id) {
+  stopBook();
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+
+function addBook() {
+  const title = document.getElementById('bookTitle').value.trim();
+  const author = document.getElementById('bookAuthor').value.trim();
+  const content = document.getElementById('bookText').value.trim();
+
+  if (!title || !content) {
+    alert('Necesitas escribir un título y el contenido.');
+    return;
+  }
+
+  books.push({
+    id: Date.now(),
+    title,
+    author: author || 'Autor desconocido',
+    content
+  });
+
+  saveBooks();
+
+  document.getElementById('bookTitle').value = '';
+  document.getElementById('bookAuthor').value = '';
+  document.getElementById('bookText').value = '';
+
+  renderBooks();
+  showSection('library');
+}
+
+function renderBooks() {
+  const list = document.getElementById('bookList');
+  list.innerHTML = '';
+
+  if (books.length === 0) {
+    list.innerHTML = '<div class="panel">Tu biblioteca espera su primera historia. 🌙</div>';
+    return;
+  }
+
+  books.forEach(book => {
+    const card = document.createElement('div');
+    card.className = 'book';
+
+    const title = document.createElement('h3');
+    title.textContent = book.title;
+
+    const author = document.createElement('p');
+    author.textContent = book.author;
+
+    const open = document.createElement('button');
+    open.textContent = 'Leer historia';
+    open.className = 'primary';
+    open.onclick = () => openBook(book.id);
+
+    const remove = document.createElement('button');
+    remove.textContent = 'Eliminar';
+    remove.onclick = () => deleteBook(book.id);
+
+    card.append(title, author, open, document.createTextNode(' '), remove);
+    list.appendChild(card);
+  });
+}
+
+function deleteBook(id) {
+  if (!confirm('¿Quieres eliminar este libro?')) return;
+  stopBook();
+  books = books.filter(b => b.id !== id);
+  saveBooks();
+  renderBooks();
+}
+
+function openBook(id) {
+  currentBook = books.find(b => b.id === id);
+  if (!currentBook) return;
+
+  document.getElementById('readingTitle').textContent = currentBook.title;
+  document.getElementById('readingAuthor').textContent = currentBook.author;
+
+  const reader = document.getElementById('reader');
+  reader.innerHTML = '';
+
+  currentBook.content.split(/\n+/).filter(p => p.trim()).forEach((paragraph, index) => {
+    const p = document.createElement('p');
+    p.textContent = paragraph.trim();
+    p.id = 'paragraph-' + index;
+    reader.appendChild(p);
+  });
+
+  currentParagraph = 0;
+  showSection('reading');
+}
+
+function speakBook() {
+  if (!currentBook) return;
+  if (!('speechSynthesis' in window)) {
+    alert('Tu navegador no admite lectura en voz alta.');
+    return;
+  }
+
+  stopBook();
+  currentParagraph = 0;
+  readNext();
+}
+
+function readNext() {
+  if (!currentBook) return;
+
+  const paragraphs = currentBook.content.split(/\n+/).filter(p => p.trim());
+
+  if (currentParagraph >= paragraphs.length) {
+    stopBook();
+    return;
+  }
+
+  document.querySelectorAll('.reader p').forEach(p => {
+    p.classList.remove('reading');
+  });
+
+  const element = document.getElementById('paragraph-' + currentParagraph);
+  if (element) {
+    element.classList.add('reading');
+    element.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  utterance = new SpeechSynthesisUtterance(paragraphs[currentParagraph]);
+  utterance.lang = 'es-419';
+  utterance.rate = 0.90;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    currentParagraph++;
+    readNext();
+  };
+
+  utterance.onerror = () => {
+    currentParagraph++;
+    readNext();
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function pauseBook() {
+  if (window.speechSynthesis) window.speechSynthesis.pause();
+}
+
+function resumeBook() {
+  if (window.speechSynthesis) window.speechSynthesis.resume();
+}
+
+function stopBook() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+  document.querySelectorAll('.reader p').forEach(p => {
+    p.classList.remove('reading');
+  });
+
+  utterance = null;
+}
+
+renderBooks();
+</script>
+
+</body>
+</html>
