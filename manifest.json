@@ -1,0 +1,13 @@
+
+{
+  "name": "Lunaria",
+  "short_name": "Lunaria",
+  "description": "Un pequeño universo donde siempre hay un lugar para ti.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#211632",
+  "theme_color": "#c9b5e8",
+  "lang": "es"
+}
