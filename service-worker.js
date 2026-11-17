@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "lunaria-v1";
+const CACHE_NAME = "lunaria-v2";
 
 const FILES_TO_CACHE = [
   "./",
